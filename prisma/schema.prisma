@@ -6,10 +6,11 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
 model User {
-  id String @unique @default(uuid())
-  email String @unique
+  id             String   @unique @default(uuid())
+  email          String   @unique
   hashedPassword String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt()
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt()
 }

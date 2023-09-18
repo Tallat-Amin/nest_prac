@@ -1,22 +1,28 @@
 import { Body, Controller, Get, Post, Req, Res } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthDto } from './dto/auth.dto';
+import { Response } from 'express';
+import { Request } from 'express';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('signup')
-  signup(@Body() authDto: AuthDto) {
-    return this.authService.signup(authDto);
+  async signup(@Body() authDto: AuthDto) {
+    return await this.authService.signup(authDto);
   }
   @Post('login')
-  login(@Body() authDto: AuthDto, @Req() req: Request, @Res() resp: Response) {
-    return this.authService.login(authDto, req, resp);
+  async login(
+    @Body() authDto: AuthDto,
+    @Req() req: Request,
+    @Res({ passthrough: true }) resp: Response,
+  ) {
+    return await this.authService.login(authDto, req, resp);
   }
   @Get('logout')
-  logout() {
-    return this.authService.logout();
+  async logout() {
+    return await this.authService.logout();
   }
   // @Post()
   // create(@Body() createAuthDto: CreateAuthDto) {
