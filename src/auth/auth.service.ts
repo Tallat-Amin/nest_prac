@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, Req, Res } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
 import { AuthDto } from './dto/auth.dto';
 import * as bcrypt from 'bcrypt';
@@ -59,8 +59,9 @@ export class AuthService {
     }
   }
   // <--------------------------------------------------- Logout --------------------------------------------------->
-  async logout() {
-    return { message: 'for logout' };
+  async logout(@Req() req: Request, @Res() resp: Response) {
+    resp.clearCookie('userToken');
+    return resp.send({ message: 'logout success' });
   }
 
   // <--------------------------------------------------- Boilerplate generated --------------------------------------------------->
